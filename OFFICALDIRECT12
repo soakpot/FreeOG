@@ -1,0 +1,23 @@
+local function replaceSecret(obj)
+    if obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
+        if obj.Text:find("Secret") then
+
+            obj.Text = obj.Text:gsub("Secret", "OG")
+
+            obj.TextColor3 = Color3.fromRGB(255, 215, 0)
+            obj.TextStrokeTransparency = 0.7
+            obj.TextStrokeColor3 = Color3.fromRGB(0, 0, 0) 
+            obj.TextScaled = false
+            obj.Font = Enum.Font.GothamBlack 
+            obj.TextSize = 17.4
+        end
+    end
+end
+
+
+for _, obj in ipairs(game:GetDescendants()) do
+    replaceSecret(obj)
+end
+
+
+game.DescendantAdded:Connect(replaceSecret)
