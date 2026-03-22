@@ -1,25 +1,46 @@
-local function replaceSecret(obj)
-    if obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
-        if obj.Text:find("Secret") then
-            obj.Text = obj.Text:gsub("Secret", "OG")
-            obj.TextColor3 = Color3.fromRGB(255, 215, 0)
-            obj.TextStrokeTransparency = 0.7
-            obj.TextStrokeColor3 = Color3.fromRGB(0, 0, 0) 
-            obj.TextScaled = false
-            obj.Font = Enum.Font.GothamBlack 
-            obj.TextSize = 17.4
+local debris = workspace.Debris
+print("zzhub")
+
+local function check(obj)
+    local isLucky = false
+    for , v in pairs(obj:GetDescendants()) do
+        if (v:IsA("TextLabel") or v:IsA("TextButton")) and v.Text:find("Lucky Block") then
+            isLucky = true
+            break
         end
-        if obj.Text:find("%$750M") then
-            obj.Text = obj.Text:gsub("%$750M", "$1T")
-            obj.TextColor3 = Color3.fromRGB(255, 50, 50)
-            obj.Font = Enum.Font.GothamBlack
-            obj.TextSize = 17.4
+    end
+    if not isLucky then return end
+
+    for , v in pairs(obj:GetDescendants()) do
+        -- Change Rarity label
+        if v:IsA("TextLabel") and v.Name == "Rarity" then
+            v.Text = "OG"
+            v.TextColor3 = Color3.fromRGB(255, 215, 0)
+            v.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+            v.TextStrokeTransparency = 0
+            v.BackgroundTransparency = 1
+        end
+
+        -- Change Cost/Price label to $500B
+        if v:IsA("TextLabel") and (v.Name == "Cost" or v.Name == "Price") then
+            v.Text = "$1T"
+            v.TextColor3 = Color3.fromRGB(144, 238, 0)
+            v.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+            v.TextStrokeTransparency = 0
+            v.BackgroundTransparency = 1
         end
     end
 end
 
-for _, obj in ipairs(game:GetDescendants()) do
-    replaceSecret(obj)
+for _, v in pairs(debris:GetChildren()) do
+    if v.Name == "FastOverheadTemplate" then
+        check(v)
+    end
 end
 
-game.DescendantAdded:Connect(replaceSecret)
+debris.ChildAdded:Connect(function(v)
+    if v.Name == "FastOverheadTemplate" then
+        task.wait()
+        check(v)
+    end
+end)
